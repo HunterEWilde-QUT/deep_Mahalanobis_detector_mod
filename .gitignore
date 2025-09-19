@@ -9,3 +9,5 @@ libs/transformations/__pycache__
 *.ipynb_checkpoints
 __pycache__
 models/__pycache__
+/.venv/
+/venv/
