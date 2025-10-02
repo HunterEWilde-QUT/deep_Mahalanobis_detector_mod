@@ -44,17 +44,23 @@ def main():
         out_dist_list = ['svhn', 'imagenet_resize', 'lsun_resize']
         
     # load networks
-    if args.net_type == 'densenet':
-        if args.dataset == 'svhn':
-            model = models.DenseNet3(100, int(args.num_classes))
-            model.load_state_dict(torch.load(pre_trained_net, map_location = "cuda:" + str(args.gpu)))
-        else:
-            model = torch.load(pre_trained_net, map_location = "cuda:" + str(args.gpu))
-        in_transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((125.3/255, 123.0/255, 113.9/255), (63.0/255, 62.1/255.0, 66.7/255.0)),])
-    elif args.net_type == 'resnet':
-        model = models.ResNet34(num_c=args.num_classes)
-        model.load_state_dict(torch.load(pre_trained_net, map_location = "cuda:" + str(args.gpu)))
-        in_transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),])
+    # if args.net_type == 'densenet':
+    #     if args.dataset == 'svhn':
+    #         model = models.DenseNet3(100, int(args.num_classes))
+    #         model.load_state_dict(torch.load(pre_trained_net, map_location = "cuda:" + str(args.gpu)))
+    #     else:
+    #         model = torch.load(pre_trained_net, map_location = "cuda:" + str(args.gpu))
+    #     in_transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((125.3/255, 123.0/255, 113.9/255), (63.0/255, 62.1/255.0, 66.7/255.0)),])
+    # elif args.net_type == 'resnet':
+    #     model = models.ResNet34(num_c=args.num_classes)
+    #     model.load_state_dict(torch.load(pre_trained_net, map_location = "cuda:" + str(args.gpu)))
+    #     in_transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),])
+
+    # hard-coded for running resnet
+    model = models.ResNet34(num_c=args.num_classes)
+    model.load_state_dict(torch.load(pre_trained_net, map_location = "cuda:" + str(args.gpu)))
+    in_transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),])
+
     model.cuda()
     print('load model: ' + args.net_type)
     
